@@ -1,0 +1,19 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: keanntech-framework-admin
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      config:
+        server-addr: 39.101.166.110:8848
+        file-extension: yaml
+        prefix: ${spring.application.name}
+        extension-configs:
+          - data-id: common-${spring.profiles.active}.yaml
+            group: GLOBAL_GROUP
+            refresh: true
+      discovery:
+        server-addr: 39.101.166.110:8848
