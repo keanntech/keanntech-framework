@@ -5,17 +5,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import java.util.ArrayList;
 import java.util.List;
 
-@ConfigurationProperties(prefix = "keanntech.ignored")
+@ConfigurationProperties(prefix = "ignored")
 public class IgnoreUrlsConfig {
 
-    private List<String> urls = new ArrayList<>();
+    private List<String> authUrls = new ArrayList<>();
 
-    public void setUrls(List<String> urls) {
-        this.urls = urls;
+    public void setAuthUrls(List<String> urls) {
+        this.authUrls = urls;
     }
 
-    public List<String> getUrls() {
-        return this.urls;
+    public List<String> getAuthUrls() {
+        return this.authUrls;
     }
 
 }
