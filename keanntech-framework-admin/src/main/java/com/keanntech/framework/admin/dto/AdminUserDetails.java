@@ -1,8 +1,7 @@
 package com.keanntech.framework.admin.dto;
 
-import com.keanntech.framework.admin.AdminApplication;
-import com.keanntech.framework.common.model.UmsAdmin;
-import com.keanntech.framework.common.model.UmsResource;
+import com.keanntech.framework.common.model.Admin;
+import com.keanntech.framework.common.model.Resource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +12,11 @@ import java.util.stream.Collectors;
 
 public class AdminUserDetails implements UserDetails {
 
-    private UmsAdmin umsAdmin;
-    private List<UmsResource> resourceList;
+    private Admin admin;
+    private List<Resource> resourceList;
 
-    public AdminUserDetails(UmsAdmin umsAdmin, List<UmsResource> resourceList) {
-        this.umsAdmin = umsAdmin;
+    public AdminUserDetails(Admin admin, List<Resource> resourceList) {
+        this.admin = admin;
         this.resourceList = resourceList;
     }
 
@@ -30,12 +29,12 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return umsAdmin.getPassword();
+        return admin.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return umsAdmin.getUsername();
+        return admin.getUsername();
     }
 
     @Override
@@ -55,6 +54,6 @@ public class AdminUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return umsAdmin.getEnabled();
+        return admin.getEnabled();
     }
 }
