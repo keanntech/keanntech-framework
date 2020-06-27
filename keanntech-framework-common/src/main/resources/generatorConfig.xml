@@ -31,7 +31,7 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.keanntech.framework.common.mapper"
                              targetProject="src/main/java"/>
         <!--生成全部表tableName设为%-->
-        <table tableName="%">
+        <table tableName="sys_role_permission">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
     </context>

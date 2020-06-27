@@ -28,6 +28,39 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` VALUES (1, 'admin', '$2a$10$.E1FokumK5GIXWgKlg.Hc.i/0/2.qdAwYFL1zc5QHdyzpXOr38RZO', 'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/timg.jpg', 'test@qq.com', '测试账号', '', 1,1,'2018-09-29 13:55:30', '2018-09-29 13:55:39','2018-09-29 13:55:39', 1,0,0);
 
 -- ----------------------------
+-- Table structure for menu
+-- ----------------------------
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu` (
+  `id` bigint(20) NOT NULL,
+  `parent_id` bigint(20) DEFAULT NULL COMMENT '父级ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `create_id` bigint(20) DEFAULT NULL COMMENT '创建人',
+  `update_id` bigint(20) DEFAULT NULL COMMENT '修改人',
+  `title` varchar(100) DEFAULT NULL COMMENT '菜单名称',
+  `url` varchar(300) DEFAULT '' COMMENT '页面路径，目录为Layout',
+  `type` int(1) DEFAULT NULL COMMENT '类型 0：目录 1：菜单'
+  `sort` int(4) DEFAULT NULL COMMENT '菜单排序',
+  `name` varchar(100) DEFAULT '' COMMENT '前端名称',
+  `icon` varchar(200) DEFAULT '' COMMENT '前端图标',
+  `hidden` int(1) DEFAULT 0 COMMENT '前端隐藏',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台菜单表';
+
+-- ----------------------------
+-- Table structure for ums_role_menu_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `role_menu_relation`;
+CREATE TABLE `role_menu_relation` (
+  `id` bigint(20) NOT NULL,
+  `role_id` bigint(20) DEFAULT NULL COMMENT '角色ID',
+  `menu_id` bigint(20) DEFAULT NULL COMMENT '菜单ID',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台角色菜单关系表';
+
+
+-- ----------------------------
 -- 角色表
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
@@ -101,6 +134,53 @@ INSERT INTO `permission` VALUES ('15', '6', '添加品牌', 'pms:brand:create', 
 INSERT INTO `permission` VALUES ('16', '6', '修改品牌', 'pms:brand:update', null, '2', '/pms/brand/update', '1', 1,1,1,1,'2018-09-29 16:15:14','2018-09-29 16:15:14',0);
 INSERT INTO `permission` VALUES ('17', '6', '删除品牌', 'pms:brand:delete', null, '2', '/pms/brand/delete', '1', 1,1,1,1,'2018-09-29 16:15:14','2018-09-29 16:15:14',0);
 INSERT INTO `permission` VALUES ('18', '0', '首页', null, null, '0', null, '1', 1,1,1,1,'2018-09-29 16:15:14','2018-09-29 16:15:14',0);
+
+
+
+-- ----------------------------
+-- Table structure for ums_admin_permission_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_admin_permission`;
+CREATE TABLE `sys_admin_permission` (
+  `id` bigint(20) NOT NULL,
+  `admin_id` bigint(20) DEFAULT NULL,
+  `permission_id` bigint(20) DEFAULT NULL,
+  `type` int(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台用户和权限关系表(除角色中定义的权限以外的加减权限)';
+
+
+-- ----------------------------
+-- Table structure for ums_role_permission_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_permission`;
+CREATE TABLE `sys_role_permission` (
+  `id` bigint(20) NOT NULL,
+  `role_id` bigint(20) DEFAULT NULL,
+  `permission_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='后台用户角色和权限关系表';
+
+-- ----------------------------
+-- Records of ums_role_permission_relation
+-- ----------------------------
+INSERT INTO `ums_role_permission_relation` VALUES ('1', '1', '1');
+INSERT INTO `ums_role_permission_relation` VALUES ('2', '1', '2');
+INSERT INTO `ums_role_permission_relation` VALUES ('3', '1', '3');
+INSERT INTO `ums_role_permission_relation` VALUES ('4', '1', '7');
+INSERT INTO `ums_role_permission_relation` VALUES ('5', '1', '8');
+INSERT INTO `ums_role_permission_relation` VALUES ('6', '2', '4');
+INSERT INTO `ums_role_permission_relation` VALUES ('7', '2', '9');
+INSERT INTO `ums_role_permission_relation` VALUES ('8', '2', '10');
+INSERT INTO `ums_role_permission_relation` VALUES ('9', '2', '11');
+INSERT INTO `ums_role_permission_relation` VALUES ('10', '3', '5');
+INSERT INTO `ums_role_permission_relation` VALUES ('11', '3', '12');
+INSERT INTO `ums_role_permission_relation` VALUES ('12', '3', '13');
+INSERT INTO `ums_role_permission_relation` VALUES ('13', '3', '14');
+INSERT INTO `ums_role_permission_relation` VALUES ('14', '4', '6');
+INSERT INTO `ums_role_permission_relation` VALUES ('15', '4', '15');
+INSERT INTO `ums_role_permission_relation` VALUES ('16', '4', '16');
+INSERT INTO `ums_role_permission_relation` VALUES ('17', '4', '17');
 
 
 

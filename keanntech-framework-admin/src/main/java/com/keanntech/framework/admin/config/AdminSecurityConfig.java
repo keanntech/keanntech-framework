@@ -1,8 +1,8 @@
 package com.keanntech.framework.admin.config;
 
-import com.keanntech.framework.admin.service.AdminService;
-import com.keanntech.framework.admin.service.ResourceService;
-import com.keanntech.framework.common.model.Resource;
+import com.keanntech.framework.admin.service.SysAdminService;
+import com.keanntech.framework.admin.service.SysResourceService;
+import com.keanntech.framework.common.model.SysResource;
 import com.keanntech.framework.security.DynamicSecurityService;
 import com.keanntech.framework.security.config.SecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +23,14 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AdminSecurityConfig extends SecurityConfig {
 
     @Autowired
-    AdminService adminService;
+    SysAdminService sysAdminService;
 
     @Autowired
-    ResourceService resourceService;
+    SysResourceService sysResourceService;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> adminService.loadUserByUsername(username);
+        return username -> sysAdminService.loadUserByUsername(username);
     }
 
     @Bean
@@ -39,8 +39,8 @@ public class AdminSecurityConfig extends SecurityConfig {
             @Override
             public Map<String, ConfigAttribute> loadDataSource() {
                 Map<String, ConfigAttribute> map = new ConcurrentHashMap<>();
-                List<Resource> resourceList = resourceService.listAll();
-                for (Resource resource : resourceList) {
+                List<SysResource> resourceList = sysResourceService.listAll();
+                for (SysResource resource : resourceList) {
                     map.put(resource.getUrl(), new org.springframework.security.access.SecurityConfig(resource.getId() + ":" + resource.getResourceName()));
                 }
                 return map;
