@@ -4,12 +4,22 @@ import java.util.List;
 
 public class SysMenuParams {
 
+    private Long    parentId;
     private String  path;
     private String  name;
     private Integer type;
     private String  component;
+    private String  redirect;
     private Meta    meta;
     private List<SysMenuParams> children;
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
     public String getPath() {
         return path;
@@ -41,6 +51,14 @@ public class SysMenuParams {
 
     public void setComponent(String component) {
         this.component = component;
+    }
+
+    public String getRedirect() {
+        return redirect;
+    }
+
+    public void setRedirect(String redirect) {
+        this.redirect = redirect;
     }
 
     public Meta getMeta() {

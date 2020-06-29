@@ -31,16 +31,7 @@ public class SysMenuServiceImpl implements SysMenuService {
             return Collections.emptyList();
         }
 
-        List<SysMenuParams> sysMenuParamsList = new ArrayList<>();
-        //获取根菜单
-        List<SysMenu> rootMenu = sysMenuList.stream().filter(sysMenu -> sysMenu.getParentId().longValue() == 0).collect(Collectors.toList());
-        rootMenu.stream().forEach(menu -> {
-            SysMenuParams sysMenuParams = this.setMenuItem(menu);
-            List<SysMenuParams> children = this.getChildren(menu.getId(), sysMenuList);
-            sysMenuParams.setChildren(children);
-            sysMenuParamsList.add(sysMenuParams);
-        });
-        return sysMenuParamsList;
+        return this.getChildren(0l, sysMenuList);
 
     }
 
@@ -66,10 +57,13 @@ public class SysMenuServiceImpl implements SysMenuService {
 
     private SysMenuParams setMenuItem(SysMenu sysMenu) {
         SysMenuParams sysMenuParams = new SysMenuParams();
+        sysMenuParams.setParentId(sysMenu.getParentId());
         sysMenuParams.setPath(sysMenu.getUrl());
         sysMenuParams.setName(sysMenu.getName());
         sysMenuParams.setType(sysMenu.getType());
-        sysMenuParams.setComponent("");
+        if(sysMenu.getParentId().longValue() == 0 || sysMenu.getType().intValue() == 0) {
+            sysMenuParams.setRedirect("noRedirect");
+        }
         SysMenuParams.Meta meta = new SysMenuParams().new Meta();
         meta.setTitle(sysMenu.getTitle());
         meta.setIcon(sysMenu.getIcon());

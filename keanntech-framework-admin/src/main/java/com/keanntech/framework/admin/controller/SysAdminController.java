@@ -68,6 +68,11 @@ public class SysAdminController {
         return CommonResult.success(tokenMap);
     }
 
+    @ApiOperation(value = "退出登录")
+    @GetMapping("/loginOut")
+    public CommonResult loginOut() {
+        return CommonResult.success(null);
+    }
 
     @ApiOperation(value = "获取当前登录用户")
     @GetMapping("/getCurrentAdminInfo")
