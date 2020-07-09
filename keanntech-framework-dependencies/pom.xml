@@ -33,6 +33,7 @@
         <mybatis-generator-core.version>1.4.0</mybatis-generator-core.version>
         <swagger2.version>2.9.2</swagger2.version>
         <javax-xml-bind.version>2.3.1</javax-xml-bind.version>
+        <uid-generator.version>1.0.0-SNAPSHOT</uid-generator.version>
     </properties>
 
     <dependencyManagement>
@@ -50,6 +51,11 @@
             <dependency>
                 <groupId>com.keanntech.framework</groupId>
                 <artifactId>keanntech-framework-admin</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.keanntech.framework</groupId>
+                <artifactId>keanntech-framework-uidgenerator</artifactId>
                 <version>${revision}</version>
             </dependency>
             <dependency>
@@ -119,6 +125,12 @@
                 <groupId>javax.xml.bind</groupId>
                 <artifactId>jaxb-api</artifactId>
                 <version>${javax-xml-bind.version}</version>
+            </dependency>
+            <!--百度生成全局唯一id-->
+            <dependency>
+                <groupId>com.baidu.fsg</groupId>
+                <artifactId>uid-generator</artifactId>
+                <version>${uid-generator.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

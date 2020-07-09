@@ -1,6 +1,8 @@
 package com.keanntech.framework.common.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.github.pagehelper.PageInfo;
+import com.keanntech.framework.common.LongJsonSerializer;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -12,6 +14,7 @@ public class CommonPage<T> {
     private Integer pageNum;
     private Integer pageSize;
     private Integer totalPage;
+    @JsonSerialize(using = LongJsonSerializer.class)
     private Long total;
     private List<T> list;
 

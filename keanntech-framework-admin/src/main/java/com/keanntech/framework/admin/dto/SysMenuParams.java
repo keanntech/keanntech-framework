@@ -4,14 +4,32 @@ import java.util.List;
 
 public class SysMenuParams {
 
+    private Long    id;
     private Long    parentId;
     private String  path;
     private String  name;
     private Integer type;
     private String  component;
     private String  redirect;
+    private Integer hidden;
     private Meta    meta;
     private List<SysMenuParams> children;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Integer hidden) {
+        this.hidden = hidden;
+    }
 
     public Long getParentId() {
         return parentId;
@@ -98,7 +116,7 @@ public class SysMenuParams {
             this.icon = icon;
         }
 
-        public boolean isNoCache() {
+        public boolean getNoCache() {
             return noCache;
         }
 

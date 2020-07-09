@@ -6,6 +6,7 @@ import com.keanntech.framework.admin.dto.SysAdminUserDetails;
 import com.keanntech.framework.admin.dto.SysMenuParams;
 import com.keanntech.framework.admin.service.SysAdminService;
 import com.keanntech.framework.admin.service.SysMenuService;
+import com.keanntech.framework.admin.util.AdminUtil;
 import com.keanntech.framework.common.api.CommonResult;
 import com.keanntech.framework.common.api.ResultCode;
 import com.keanntech.framework.common.model.SysAdmin;
@@ -77,24 +78,18 @@ public class SysAdminController {
     @ApiOperation(value = "获取当前登录用户")
     @GetMapping("/getCurrentAdminInfo")
     public CommonResult getCurrentAdminInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null) {
-            if (authentication instanceof AnonymousAuthenticationToken) {
-                return CommonResult.unauthorized(null);
-            }
-
-            if (authentication instanceof UsernamePasswordAuthenticationToken) {
-                SysAdminUserDetails sysAdminUserDetails = (SysAdminUserDetails) authentication.getPrincipal();
-                SysAdmin sysAdmin = sysAdminService.getAdminByUsername(sysAdminUserDetails.getUsername());
-                List<SysMenuParams> menuTree = sysMenuService.getMenuTree(sysAdmin.getId());
-                Map<String, Object> data = new HashMap<>(4);
-                data.put("username", sysAdmin.getUsername());
-                data.put("id", sysAdmin.getId());
-                data.put("portrait", sysAdmin.getPortrait());
-                data.put("menus", menuTree);
-                return CommonResult.success(data);
-            }
+        SysAdminUserDetails sysAdminUserDetails = AdminUtil.getCurrentAdmin();
+        if(sysAdminUserDetails != null) {
+            SysAdmin sysAdmin = sysAdminService.getAdminByUsername(sysAdminUserDetails.getUsername());
+            List<SysMenuParams> menuTree = sysMenuService.getMenuTree(sysAdmin.getId());
+            Map<String, Object> data = new HashMap<>(4);
+            data.put("username", sysAdmin.getUsername());
+            data.put("id", sysAdmin.getId());
+            data.put("portrait", sysAdmin.getPortrait());
+            data.put("menus", menuTree);
+            return CommonResult.success(data);
         }
+
         return CommonResult.unauthorized(null);
     }
 }

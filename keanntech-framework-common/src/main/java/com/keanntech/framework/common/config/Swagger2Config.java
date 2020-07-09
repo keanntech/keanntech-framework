@@ -1,6 +1,7 @@
 package com.keanntech.framework.common.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -22,7 +23,7 @@ public class Swagger2Config {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.keanntech.framework"))
+                .apis(RequestHandlerSelectors.withClassAnnotation(RestController.class))
                 .paths(PathSelectors.any())
                 .build()
                 .securitySchemes(securitySchemes())
@@ -50,7 +51,10 @@ public class Swagger2Config {
     private List<SecurityContext> securityContexts() {
         //设置需要登录认证的路径
         List<SecurityContext> result = new ArrayList<>();
-        result.add(getContextByPath("/admin/.*"));
+        for (String path : swagger2SecurityPathConfig().getSecurityPath()) {
+            result.add(getContextByPath(path));
+        }
+//        result.add(getContextByPath("/admin/.*"));
         return result;
     }
 
@@ -68,6 +72,11 @@ public class Swagger2Config {
         authorizationScopes[0] = authorizationScope;
         result.add(new SecurityReference("Authorization", authorizationScopes));
         return result;
+    }
+
+    @Bean
+    public Swagger2SecurityPathConfig swagger2SecurityPathConfig() {
+        return new Swagger2SecurityPathConfig();
     }
 
 }

@@ -1,9 +1,13 @@
 package com.keanntech.framework.common.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.keanntech.framework.common.LongJsonSerializer;
+
 /**
  * 通用返回对象
  */
 public class CommonResult<T> {
+    @JsonSerialize(using = LongJsonSerializer.class)
     private long code;
     private String message;
     private T data;

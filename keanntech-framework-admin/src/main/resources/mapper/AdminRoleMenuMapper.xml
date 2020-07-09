@@ -18,8 +18,14 @@
 	LEFT JOIN sys_role role ON role.id = ra.role_id
 	LEFT JOIN sys_role_menu rm ON role.id = rm.role_id
 	LEFT JOIN sys_menu menu ON menu.id = rm.menu_id
-  WHERE
-    ra.admin_id = #{adminId} AND menu.id IS NOT NULL
+  <where>
+    <if test="adminId != 0">
+      ra.admin_id = #{adminId}
+    </if>
+    <if test="1">
+      AND menu.hidden = 0 AND menu.deleted = 0
+    </if>
+  </where>
   GROUP BY menu.id
   ORDER BY menu.sort ASC
 </select>

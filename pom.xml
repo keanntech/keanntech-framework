@@ -9,6 +9,7 @@
         <module>keanntech-framework-security</module>
         <module>keanntech-framework-common</module>
         <module>keanntech-framework-admin</module>
+        <module>keanntech-framework-uidgenerator</module>
     </modules>
 
     <parent>
