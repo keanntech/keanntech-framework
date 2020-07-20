@@ -1,5 +1,7 @@
 package com.keanntech.framework.common.model;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -11,6 +13,7 @@ public class SysRole extends SysRoleKey implements Serializable {
      *
      * @mbg.generated Wed Jun 24 08:38:58 CST 2020
      */
+    @ApiModelProperty(value = "角色名称")
     private String roleName;
 
     /**
@@ -20,6 +23,7 @@ public class SysRole extends SysRoleKey implements Serializable {
      *
      * @mbg.generated Wed Jun 24 08:38:58 CST 2020
      */
+    @ApiModelProperty(value = "角色编码")
     private String roleCode;
 
     /**
@@ -29,6 +33,7 @@ public class SysRole extends SysRoleKey implements Serializable {
      *
      * @mbg.generated Wed Jun 24 08:38:58 CST 2020
      */
+    @ApiModelProperty(value = "描述")
     private String description;
 
     /**
@@ -38,6 +43,7 @@ public class SysRole extends SysRoleKey implements Serializable {
      *
      * @mbg.generated Wed Jun 24 08:38:58 CST 2020
      */
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     /**
@@ -83,6 +89,7 @@ public class SysRole extends SysRoleKey implements Serializable {
      *
      * @mbg.generated Wed Jun 24 08:38:58 CST 2020
      */
+    @ApiModelProperty(value = "是否禁用")
     private Boolean enable;
 
     /**
@@ -92,6 +99,7 @@ public class SysRole extends SysRoleKey implements Serializable {
      *
      * @mbg.generated Wed Jun 24 08:38:58 CST 2020
      */
+    @ApiModelProperty(value = "是否删除")
     private Boolean deleted;
 
     /**

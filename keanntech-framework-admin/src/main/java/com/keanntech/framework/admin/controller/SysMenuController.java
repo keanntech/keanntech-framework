@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.List;
 
-@Api(tags = "SysMenuController")
+@Api(value = "SysMenuController", tags = {"菜单接口"})
 @RequestMapping("/admin/sysmenu")
 @RestController
 public class SysMenuController {
