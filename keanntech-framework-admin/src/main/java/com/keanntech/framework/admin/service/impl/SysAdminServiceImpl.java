@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service("sysAdminService")
 public class SysAdminServiceImpl implements SysAdminService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SysAdminServiceImpl.class);

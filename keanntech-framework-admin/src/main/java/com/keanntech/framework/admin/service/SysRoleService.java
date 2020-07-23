@@ -9,6 +9,6 @@ public interface SysRoleService {
 
     List<SysRole> getAllRole();
     boolean saveRole(SysRole sysRole) throws ParseException;
-    int updateRole(SysRole sysRole) ;
+    int updateRole(SysRole sysRole) throws ParseException ;
 
 }

@@ -1,24 +1,21 @@
 package com.keanntech.framework.admin.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import com.baidu.fsg.uid.UidGenerator;
-import com.keanntech.framework.admin.dto.SysAdminUserDetails;
 import com.keanntech.framework.admin.dto.SysMenuParams;
 import com.keanntech.framework.admin.mapper.AdminRoleMenuMapper;
 import com.keanntech.framework.admin.service.SysAdminService;
 import com.keanntech.framework.admin.service.SysMenuService;
 import com.keanntech.framework.admin.util.AdminUtil;
 import com.keanntech.framework.common.exception.ApiException;
-import com.keanntech.framework.common.exception.UserNotLoginException;
 import com.keanntech.framework.common.mapper.SysMenuMapper;
 import com.keanntech.framework.common.model.SysAdmin;
 import com.keanntech.framework.common.model.SysMenu;
 import com.keanntech.framework.common.model.SysMenuExample;
 import com.keanntech.framework.common.model.SysMenuKey;
+import com.keanntech.framework.common.util.UidGeneratorUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,19 +23,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("sysMenuService")
 public class SysMenuServiceImpl implements SysMenuService {
 
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final ThreadLocal<SimpleDateFormat> threadLocal = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+    };
 
     @Autowired
     AdminRoleMenuMapper adminRoleMenuMapper;
 
     @Autowired
     SysMenuMapper sysMenuMapper;
-
-    @Resource
-    UidGenerator uidGenerator;
 
     @Autowired
     SysAdminService sysAdminService;
@@ -85,11 +84,7 @@ public class SysMenuServiceImpl implements SysMenuService {
      */
     @Override
     public boolean saveMenu(SysMenu sysMenu) throws ParseException {
-        SysAdminUserDetails sysAdminUserDetails = AdminUtil.getCurrentAdmin();
-        if(sysAdminUserDetails == null) {
-            throw new UserNotLoginException("用户未登录或TOKEN已过期");
-        }
-
+        SysAdmin sysAdmin = AdminUtil.getCurrentAdmin();
         if(this.menuTitleIsExist(sysMenu,false)) {
             throw new ApiException("菜单名称已存在");
         }
@@ -97,13 +92,11 @@ public class SysMenuServiceImpl implements SysMenuService {
             throw new ApiException("路由已存在");
         }
 
-        SysAdmin sysAdmin = sysAdminService.getAdminByUsername(sysAdminUserDetails.getUsername());
-        Long uid = uidGenerator.getUID();
-        sysMenu.setId(uid);
+        sysMenu.setId(UidGeneratorUtil.getUid());
         sysMenu.setCreateId(sysAdmin.getId());
         sysMenu.setUpdateId(sysAdmin.getId());
-        sysMenu.setCreateTime(df.parse(DateUtil.now()));
-        sysMenu.setUpdateTime(df.parse(DateUtil.now()));
+        sysMenu.setCreateTime(threadLocal.get().parse(DateUtil.now()));
+        sysMenu.setUpdateTime(threadLocal.get().parse(DateUtil.now()));
         sysMenu.setDeleted(0);
         return sysMenuMapper.insert(sysMenu) >= 0 ? true : false;
     }
@@ -116,20 +109,14 @@ public class SysMenuServiceImpl implements SysMenuService {
      */
     @Override
     public int updateMenu(SysMenu sysMenu) throws ParseException {
-        SysAdminUserDetails sysAdminUserDetails = AdminUtil.getCurrentAdmin();
-        if(sysAdminUserDetails == null) {
-            throw new UserNotLoginException("用户未登录或TOKEN已过期");
-        }
-
         if(this.menuTitleIsExist(sysMenu,true)) {
             throw new ApiException("菜单名称已存在");
         }
         if(this.menuUrlIsExist(sysMenu, true)) {
             throw new ApiException("路由已存在");
         }
-        SysAdmin sysAdmin = sysAdminService.getAdminByUsername(sysAdminUserDetails.getUsername());
-
-        sysMenu.setUpdateTime(df.parse(DateUtil.now()));
+        SysAdmin sysAdmin = AdminUtil.getCurrentAdmin();
+        sysMenu.setUpdateTime(threadLocal.get().parse(DateUtil.now()));
         sysMenu.setUpdateId(sysAdmin.getId());
         SysMenuExample sysMenuExample = new SysMenuExample();
         sysMenuExample.clear();

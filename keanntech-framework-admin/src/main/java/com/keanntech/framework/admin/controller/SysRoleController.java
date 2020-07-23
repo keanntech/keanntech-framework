@@ -70,7 +70,13 @@ public class SysRoleController {
             return CommonResult.failed(ResultCode.VALIDATE_FAILED, strErrJson);
         }
 
-        return sysRoleService.updateRole(sysRole) > 0 ? CommonResult.success(sysRole) : CommonResult.failed("更新失败");
+        try {
+            sysRoleService.updateRole(sysRole);
+            return CommonResult.success(sysRole);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return CommonResult.failed("更新失败");
     }
 
 }

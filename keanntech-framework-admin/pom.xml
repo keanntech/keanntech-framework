@@ -43,20 +43,6 @@
             <artifactId>keanntech-framework-common</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.keanntech.framework</groupId>
-            <artifactId>keanntech-framework-uidgenerator</artifactId>
-            <exclusions>
-                <exclusion>
-                    <artifactId>mybatis-spring</artifactId>
-                    <groupId>org.mybatis</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>mybatis</artifactId>
-                    <groupId>org.mybatis</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
         </dependency>

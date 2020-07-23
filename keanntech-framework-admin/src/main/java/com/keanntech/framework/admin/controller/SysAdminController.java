@@ -74,18 +74,13 @@ public class SysAdminController {
     @ApiOperation(value = "获取当前登录用户")
     @GetMapping("/getCurrentAdminInfo")
     public CommonResult getCurrentAdminInfo() {
-        SysAdminUserDetails sysAdminUserDetails = AdminUtil.getCurrentAdmin();
-        if(sysAdminUserDetails != null) {
-            SysAdmin sysAdmin = sysAdminService.getAdminByUsername(sysAdminUserDetails.getUsername());
-            List<SysMenuParams> menuTree = sysMenuService.getMenuTree(sysAdmin.getId());
-            Map<String, Object> data = new HashMap<>(4);
-            data.put("username", sysAdmin.getUsername());
-            data.put("id", sysAdmin.getId());
-            data.put("portrait", sysAdmin.getPortrait());
-            data.put("menus", menuTree);
-            return CommonResult.success(data);
-        }
-
-        return CommonResult.unauthorized(null);
+        SysAdmin sysAdmin = AdminUtil.getCurrentAdmin();
+        List<SysMenuParams> menuTree = sysMenuService.getMenuTree(sysAdmin.getId());
+        Map<String, Object> data = new HashMap<>(4);
+        data.put("username", sysAdmin.getUsername());
+        data.put("id", sysAdmin.getId());
+        data.put("portrait", sysAdmin.getPortrait());
+        data.put("menus", menuTree);
+        return CommonResult.success(data);
     }
 }
