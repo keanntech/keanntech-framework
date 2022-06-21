@@ -13,7 +13,7 @@
 
     <properties>
         <mybatis-generator-plugin.version>1.4.0</mybatis-generator-plugin.version>
-        <mysql-connector.version>8.0.19</mysql-connector.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
     </properties>
 
     <dependencies>
